@@ -1,7 +1,9 @@
 'use strict';
 const mysql = require('mysql');
 const MySQL_URL = 'aeroascent.ctsobuno4cjk.ap-southeast-2.rds.amazonaws.com';
-
+/**
+ * Provide mysql connect, query and disconnect services
+ */
 class MySQL {
 
     constructor () {
