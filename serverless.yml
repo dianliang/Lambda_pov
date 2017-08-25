@@ -16,3 +16,10 @@ functions:
           path: pulse/summary/shiftCoverage
           method: get
           cors: true
+  getS3ObjectList:
+    handler: handler.getS3ObjectList
+    events:
+      - http:
+          path: getS3ObjectList
+          method: get
+          cors: true
