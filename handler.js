@@ -1,7 +1,7 @@
 'use strict';
 
 const MYSQL = require('./mysql-util');
-
+const AWS_S3 = require('./s3-service');
 module.exports.getShiftCoverage = (event, context, callback) => {
     console.log('start getShiftCoverage');
     let data = {};
@@ -33,6 +33,35 @@ module.exports.getShiftCoverage = (event, context, callback) => {
                 "Access-Control-Allow-Credentials": true // Required for cookies, authorization headers with HTTPS
             },
             body: JSON.stringify(errResp),
+        };
+        callback(null, response);
+    });
+
+};
+
+
+module.exports.getS3ObjectList = (event, context, callback) => {
+    const aws_s3_service = new AWS_S3();
+    console.log('getS3List:: started');
+    aws_s3_service.listObject('upload-lq-bucket').then((list) => {
+        const response = {
+            statusCode: 200,
+            headers: {
+                "Access-Control-Allow-Origin": "*", // Required for CORS support to work
+                "Access-Control-Allow-Credentials": true // Required for cookies, authorization headers with HTTPS
+            },
+            body: JSON.stringify(list),
+        };
+        callback(null, response);
+    }).catch((err) => {
+        const errObj = {err: err};
+        const response = {
+            statusCode: 400,
+            headers: {
+                "Access-Control-Allow-Origin": "*", // Required for CORS support to work
+                "Access-Control-Allow-Credentials": true // Required for cookies, authorization headers with HTTPS
+            },
+            body: JSON.stringify(errObj),
         };
         callback(null, response);
     });
