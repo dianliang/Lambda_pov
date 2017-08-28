@@ -9,8 +9,10 @@ module.exports.getShiftCoverage = (event, context, callback) => {
 
     mySQL.connect().then(() => {
         return mySQL.query('call tracker_brisbane_au.getShiftCoverage;');
+        // return mySQL.query('select * from tracker_brisbane_au.form');
     }).then((result) => {
         data = JSON.stringify(result[0][0]);
+        // data = JSON.stringify(result);
         const response = {
             statusCode: 200,
             headers: {
